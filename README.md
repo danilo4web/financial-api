@@ -16,6 +16,8 @@
 #### Check PSR-12:
 ```docker-compose run --rm composer check-psr12```
 
+#### Run Integration Tests
+```docker-compose run --rm composer test tests/Integration```
 
 ### Endpoints Available:
 
@@ -45,7 +47,7 @@ POST - {{URL}}/api/v1/transfer
 GET - {{URL}}/api/v1/accounts/balance/7525794266
 ```
 
-### Transfer Historical by Account
+#### Transfer Historical by Account
 ```
 GET - {{URL}}/api/v1/transactions/7525794266
 ```

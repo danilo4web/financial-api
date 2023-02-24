@@ -35,6 +35,10 @@ class AccountController extends Controller
     {
         $account = $this->accountRepository->findAccountByNumber($accountNumber);
 
+        if ($account === null) {
+            return response()->json('Invalid Account', Response::HTTP_CONFLICT);
+        }
+
         $responseData = [
             'accountId' => $account->id,
             'balance' => $account->balance

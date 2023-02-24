@@ -31,6 +31,10 @@ class TransactionController extends Controller
     {
         $account = $this->accountRepository->findAccountByNumber($accountNumber);
 
+        if ($account === null) {
+            return response()->json('Invalid Account', Response::HTTP_CONFLICT);
+        }
+
         $historical = $this->transactionRepository->getHistoryByAccountId($account->id);
 
         return response()->json(['data' => $historical], Response::HTTP_OK);

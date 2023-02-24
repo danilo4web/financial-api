@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Mockery\Exception;
 
 class TransactionController extends Controller
 {
@@ -26,28 +27,34 @@ class TransactionController extends Controller
         $this->accountRepository = $accountRepository;
     }
 
-    public function transfer(Request $request)
+    public function history(int $accountNumber): JsonResponse
+    {
+        $account = $this->getAccount($accountNumber);
+
+        $historical = $this->transactionRepository->getHistoryByAccountId($account->id);
+
+        return response()->json(['data' => $historical], Response::HTTP_OK);
+    }
+
+    public function transfer(Request $request): JsonResponse
     {
         $data = $request->all();
 
-        $accountFrom = $this->getAccount($data['from_account']);
-        $accountTo = $this->getAccount($data['to_account']);
+        try {
+            $accountFrom = $this->getAccount($data['from_account']);
+            $accountTo = $this->getAccount($data['to_account']);
 
-        $this->transactionRepository->addDebit($accountFrom->id, $data['amount']);
-        $this->transactionRepository->addCredit($accountTo->id, $data['amount']);
+            $this->transactionRepository->addDebit($accountFrom->id, $data['amount']);
+            $this->transactionRepository->addCredit($accountTo->id, $data['amount']);
+        } catch(\DomainException $e) {
+            return response()->json($e->getMessage(), Response::HTTP_CONFLICT);
+        }
 
-        return response()->json([], Response::HTTP_OK);
+        return response()->json('Transfer successfully completed', Response::HTTP_OK);
     }
 
     private function getAccount(int $accountNumber)
     {
         return $this->accountRepository->findAccountByNumber($accountNumber);
-    }
-
-    public function show(int $transactionId): JsonResponse
-    {
-        $transaction = $this->transactionRepository->find($transactionId);
-
-        return response()->json(new TransactionResource($transaction), Response::HTTP_OK);
     }
 }

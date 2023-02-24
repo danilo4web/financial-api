@@ -28,6 +28,11 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function addDebit(int $accountId, float $amount): void
     {
         $account = Account::find($accountId);
+
+        if ($amount > $account->balance) {
+            throw new \DomainException("Account: {$account->account_number} don't have enough money!");
+        }
+
         $account->balance -= $amount;
         $updated = $account->update($account->toArray());
 
@@ -38,6 +43,14 @@ class TransactionRepository implements TransactionRepositoryInterface
                 'account_id' => $account->id
             ]);
         }
+    }
+
+    public function getHistoryByAccountId(int $accountId)
+    {
+        return Transaction::where('account_id', $accountId)
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->toArray();
     }
 }
 

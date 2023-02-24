@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('v1/accounts', [App\Http\Controllers\API\AccountController::class, 'createAccount']);
 Route::post('v1/transfer', [App\Http\Controllers\API\TransactionController::class, 'transfer']);
-Route::get('v1/accounts/balance/{accountId}', [App\Http\Controllers\API\AccountController::class, 'balance']);
+Route::get('v1/accounts/balance/{accountNumber}', [App\Http\Controllers\API\AccountController::class, 'balance']);
+Route::get('v1/transactions/{accountNumber}', [App\Http\Controllers\API\TransactionController::class, 'history']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

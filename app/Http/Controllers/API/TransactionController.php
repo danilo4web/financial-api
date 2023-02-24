@@ -16,15 +16,10 @@ use Mockery\Exception;
 
 class TransactionController extends Controller
 {
-    private TransactionRepositoryInterface $transactionRepository;
-    private AccountRepositoryInterface $accountRepository;
-
     public function __construct(
-        TransactionRepositoryInterface $transactionRepository,
-        AccountRepositoryInterface $accountRepository,
+        protected TransactionRepositoryInterface $transactionRepository,
+        protected AccountRepositoryInterface $accountRepository,
     ) {
-        $this->transactionRepository = $transactionRepository;
-        $this->accountRepository = $accountRepository;
     }
 
     public function history(int $accountNumber): JsonResponse

@@ -11,12 +11,9 @@ use Illuminate\Http\Response;
 
 class AccountController extends Controller
 {
-    private AccountRepositoryInterface $accountRepository;
-
     public function __construct(
-        AccountRepositoryInterface $accountRepository,
+        protected AccountRepositoryInterface $accountRepository,
     ) {
-        $this->accountRepository = $accountRepository;
     }
 
     public function createAccount(Request $request): JsonResponse

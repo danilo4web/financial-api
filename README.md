@@ -1,63 +1,53 @@
-### Objective
+#### Create .env file configuration (from the example env file):
+```cp .env.example .env```
 
-Your assignment is to build an internal API for a fake financial institution using PHP and Laravel.
+#### Build docker environment:
+```docker-compose up -d --build```
 
-### Brief
+#### Composer update:
+```docker-compose run --user=1000 --rm composer update```
 
-While modern banks have evolved to serve a plethora of functions, at their core, banks must provide certain basic features. Today, your task is to build the basic HTTP API for one of those banks! Imagine you are designing a backend API for bank employees. It could ultimately be consumed by multiple frontends (web, iOS, Android etc).
+#### Key generate:
+```docker-compose run artisan key:generate```
 
-### Tasks
+#### Create the database and seed (only in case you need data to a demo):
+```docker-compose run --rm artisan migrate --seed```
 
-- Implement assignment using:
-  - Language: **PHP**
-  - Framework: **Laravel**
-- There should be API routes that allow them to:
-  - Create a new bank account for a customer, with an initial deposit amount. A
-    single customer may have multiple bank accounts.
-  - Transfer amounts between any two accounts, including those owned by
-    different customers.
-  - Retrieve balances for a given account.
-  - Retrieve transfer history for a given account.
-- Write tests for your business logic
+#### Check PSR-12:
+```docker-compose run --rm composer check-psr12```
 
-Feel free to pre-populate your customers with the following:
+#### Run Integration Tests
+```docker-compose run --rm composer test tests/Integration```
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Arisha Barron"
-  },
-  {
-    "id": 2,
-    "name": "Branden Gibson"
-  },
-  {
-    "id": 3,
-    "name": "Rhonda Church"
-  },
-  {
-    "id": 4,
-    "name": "Georgina Hazel"
-  }
-]
+### Endpoints Available:
+
+####  Create a new bank account
+```
+POST - {{URL}}/api/v1/accounts
+
+{
+    "customer_id": 1,
+    "balance": 100
+}
 ```
 
-You are expected to design any other required models and routes for your API.
+#### Transfer By Accounts
+```
+POST - {{URL}}/api/v1/transfer
 
-### Evaluation Criteria
+{
+    "amount": 10,
+    "from_account": "7525794266",
+    "to_account": "3127526238"
+}
+```
 
-- **PHP** best practices
-- Completeness: did you complete the features?
-- Correctness: does the functionality act in sensible, thought-out ways?
-- Maintainability: is it written in a clean, maintainable way?
-- Testing: is the system adequately tested?
-- Documentation: is the API well-documented?
+#### Retrieve Balance
+```
+GET - {{URL}}/api/v1/accounts/balance/7525794266
+```
 
-### CodeSubmit
-
-Please organize, design, test and document your code as if it were going into production - then push your changes to the master branch. After you have pushed your code, you may submit the assignment on the assignment page.
-
-All the best and happy coding,
-
-The Trady Team
+#### Transfer Historical by Account
+```
+GET - {{URL}}/api/v1/transactions/7525794266
+```

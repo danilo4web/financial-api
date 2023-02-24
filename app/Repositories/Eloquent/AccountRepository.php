@@ -14,14 +14,9 @@ class AccountRepository implements AccountRepositoryInterface
         return Account::where('account_number', $accountNumber)->first();
     }
 
-    public function getBalance(int $accountId)
+    public function getBalance(int $accountId): float
     {
         return Account::find($accountId)->value('balance');
-    }
-
-    public function updateBalance(int $accountId, float $amount)
-    {
-        // must implement
     }
 
     public function addAccount(array $data)

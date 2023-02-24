@@ -30,4 +30,16 @@ class AccountController extends Controller
             Response::HTTP_CREATED
         );
     }
+
+    public function balance(int $accountNumber): JsonResponse
+    {
+        $account = $this->accountRepository->findAccountByNumber($accountNumber);
+
+        $responseData = [
+            'accountId' => $account->id,
+            'balance' => $account->balance
+        ];
+
+        return response()->json($responseData, Response::HTTP_OK);
+    }
 }

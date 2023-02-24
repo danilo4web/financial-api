@@ -43,6 +43,10 @@ class TransactionController extends Controller
             $accountFrom = $this->accountRepository->findAccountByNumber($data['from_account']);
             $accountTo = $this->accountRepository->findAccountByNumber($data['to_account']);
 
+            if ($accountFrom === null || $accountTo === null) {
+                throw new \DomainException('Invalid Account. Please check it!');
+            }
+
             $this->transactionRepository->addDebit($accountFrom->id, $data['amount']);
             $this->transactionRepository->addCredit($accountTo->id, $data['amount']);
         } catch (\DomainException $e) {

@@ -29,7 +29,7 @@ class TransactionController extends Controller
 
     public function history(int $accountNumber): JsonResponse
     {
-        $account = $this->getAccount($accountNumber);
+        $account = $this->accountRepository->findAccountByNumber($accountNumber);
 
         $historical = $this->transactionRepository->getHistoryByAccountId($account->id);
 
@@ -41,20 +41,15 @@ class TransactionController extends Controller
         $data = $request->all();
 
         try {
-            $accountFrom = $this->getAccount($data['from_account']);
-            $accountTo = $this->getAccount($data['to_account']);
+            $accountFrom = $this->accountRepository->findAccountByNumber($data['from_account']);
+            $accountTo = $this->accountRepository->findAccountByNumber($data['to_account']);
 
             $this->transactionRepository->addDebit($accountFrom->id, $data['amount']);
             $this->transactionRepository->addCredit($accountTo->id, $data['amount']);
-        } catch(\DomainException $e) {
+        } catch (\DomainException $e) {
             return response()->json($e->getMessage(), Response::HTTP_CONFLICT);
         }
 
         return response()->json('Transfer successfully completed', Response::HTTP_OK);
-    }
-
-    private function getAccount(int $accountNumber)
-    {
-        return $this->accountRepository->findAccountByNumber($accountNumber);
     }
 }

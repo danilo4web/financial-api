@@ -53,4 +53,3 @@ class TransactionRepository implements TransactionRepositoryInterface
             ->toArray();
     }
 }
-

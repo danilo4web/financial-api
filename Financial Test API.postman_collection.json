@@ -1,0 +1,158 @@
+{
+	"info": {
+		"_postman_id": "d6b0a5d3-7f86-4057-ac04-5d0ac1a15473",
+		"name": "Financial Test API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5136954"
+	},
+	"item": [
+		{
+			"name": "Create a new bank account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"customer_id\": 1,\n    \"balance\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/v1/accounts",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 1,\n    \"from_account\": \"7525794266\",\n    \"to_account\": \"3127526238\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/v1/transfer",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve Balance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/v1/accounts/balance/7525794266",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"accounts",
+						"balance",
+						"7525794266"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Historical",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/api/v1/transactions/7525794266",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"transactions",
+						"7525794266"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "http://0.0.0.0:8080",
+			"type": "string"
+		}
+	]
+}

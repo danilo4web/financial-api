@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('v1/accounts', [App\Http\Controllers\API\AccountController::class, 'createAccount']);
+Route::post('v1/transfer', [App\Http\Controllers\API\TransactionController::class, 'transfer']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

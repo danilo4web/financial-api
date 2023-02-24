@@ -9,6 +9,11 @@ class AccountRepository implements AccountRepositoryInterface
 {
     protected $model = Account::class;
 
+    public function findAccountByNumber(int $accountNumber)
+    {
+        return Account::where('account_number', $accountNumber)->first();
+    }
+
     public function getBalance(int $accountId)
     {
         return Account::find($accountId)->value('balance');

@@ -9,4 +9,6 @@ interface AccountRepositoryInterface
     public function addAccount(array $data);
 
     public function updateBalance(int $accountId, float $amount);
+
+    public function findAccountByNumber(int $accountNumber);
 }
